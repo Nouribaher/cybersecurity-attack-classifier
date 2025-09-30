@@ -87,7 +87,17 @@ The pipeline consists of five modular components:
 - `autoencoder_model.h5`: Trained feature reducer
 - `requirements.txt`: Dependencies
 
-## 🚀 How to Run
-```bash
-pip install -r requirements.txt
-python src/main.py
+
+## 📚 Citation
+
+Baher, N. (2025). *Hybrid Oversampling for Intrusion Detection: SMOTE + KGSMOTE*. GitHub Repository: [ids-oversampling-smote-kgsmote](https://github.com/your-username/ids-oversampling-smote-kgsmote).
+
+@misc
+{baher2025ids,
+  author       = {Nouri Baher},
+  title        = {Hybrid Oversampling for Intrusion Detection: SMOTE + KGSMOTE},
+  year         = {2025},
+  howpublished = {\url{https://github.com/your-username/ids-oversampling-smote-kgsmote}},
+}
+
+'''
