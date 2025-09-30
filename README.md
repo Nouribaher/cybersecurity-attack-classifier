@@ -74,7 +74,19 @@ The pipeline consists of five modular components:
     - SHAP analysis reveals `same_srv_rate`, `dst_host_srv_count`, and `protocol_type` as top predictors
      - Misclassifications mostly occur between similar attack types (e.g., Probe vs DoS)
 
+### What Is SMOTE?
+SMOTE stands for Synthetic Minority Over-sampling Technique. It’s a method used to address class imbalance in datasets, particularly when some attack types (like rare attacks : U2R (user to root) or R2L (remote to local) ) are underrepresented compared to normal traffic or DoS attacks.
+Instead of duplicating rare samples, SMOTE generates synthetic examples by interpolating between existing minority class instances. This helps the model learn better decision boundaries.
 
+###  Why SMOTE Matters in IDS Project?
+- Improves detection of rare attacks that would otherwise be ignored by the model.
+- Provides a fast and effective way to balance the dataset, reducing bias toward majority classes like normal or DoS traffic.
+- Aligns with KGMS-IDS, which uses KGSMOTE (a KDE-enhanced variant) for rare-class oversampling
+
+###  Why KGSMOTE Matters in IDS Project?
+- Refines this approach by using kernel density estimation (KDE)  to understand where real samples are densely clustered  and then generates synthetic samples within those dense regions, avoiding outliers.
+-  Instead of interpolating randomly (like SMOTE), KGSMOTE samples from the KDE model, which acts like a map of where realistic data lives. This makes synthetic samples more natural and representative of the minority class.
+ - Ensures that new  synthetic samples match those Rare attacks like U2R and R2L have complex feature patterns, rather than distorting them, reducing noise and improving model precision.
 
 ## 📁 Files
    - `IDS_Pipeline.ipynb`: End-to-end notebook
