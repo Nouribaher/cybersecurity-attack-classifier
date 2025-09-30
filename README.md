@@ -60,12 +60,26 @@ The pipeline consists of five modular components:
 4. **Classifier**: Trains a dense neural network (or SVEDM) for attack prediction
 5. **Evaluator**: Generates SHAP plots, confusion matrix, and Excel reports
 
-![Pipeline Diagram](docs/pipeline.png)
+## SMOTE Synthetic Minority Oversampling Technique
+
+  ### Why This Matters for IDS Pipeline
+      - Without encoding, SMOTE treats categorical values like continuous numbers — which leads to invalid synthetic samples
+       - Without normalization, features like src_bytes or duration dominate the interpolation — skewing the oversampling
+  ### conclusion:
+      Before applying SMOTE or KGSMOTE, all categorical features are encoded and the dataset is normalized. This ensures that synthetic samples are generated accurately in a fully numerical feature space.
+
+
+🔹 What SMOTE Requires:
+- Numerical features only — SMOTE uses distance-based interpolation, so categorical features must be encoded
+- Consistent scaling — normalization (e.g., MinMaxScaler) helps ensure all features contribute equally to distance calculations
+
 
 ## 📊 Results
 - Accuracy: 98.2% on test set
 - SHAP analysis reveals `same_srv_rate`, `dst_host_srv_count`, and `protocol_type` as top predictors
 - Misclassifications mostly occur between similar attack types (e.g., Probe vs DoS)
+
+
 
 ## 📁 Files
 - `IDS_Pipeline.ipynb`: End-to-end notebook
