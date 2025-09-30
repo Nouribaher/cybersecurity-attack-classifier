@@ -1,0 +1,354 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6e416c70-df2a-4285-95d8-a5b20e24ec45",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import json\n",
+    "import re\n",
+    "from datetime import datetime\n",
+    "\n",
+    "class CitationLogger:\n",
+    "    def __init__(self, author, title, repo_url, year=None):\n",
+    "        self.author = author\n",
+    "        self.title = title\n",
+    "        self.repo_url = repo_url\n",
+    "        self.year = year or datetime.now().year\n",
+    "        self.bib_key = self._generate_bib_key()\n",
+    "\n",
+    "    def _generate_bib_key(self):\n",
+    "        first = re.sub(r'[^a-zA-Z]', '', self.author.split()[0].lower())\n",
+    "        title_token = re.sub(r'[^a-zA-Z]', '', self.title.split()[0].lower())\n",
+    "        return f\"{first}{self.year}{title_token}\"\n",
+    "\n",
+    "    def markdown(self):\n",
+    "        return f\"\"\"### Citation  \n",
+    "{self.author} ({self.year}). *{self.title}*. GitHub Repository: [{self.repo_url.split('/')[-1]}]({self.repo_url})\n",
+    "\"\"\"\n",
+    "\n",
+    "    def bibtex(self):\n",
+    "        return f\"\"\"@misc{{{self.bib_key},\n",
+    "  author       = {{{self.author}}},\n",
+    "  title        = {{{self.title}}},\n",
+    "  year         = {{{self.year}}},\n",
+    "  howpublished = {{\\\\url{{{self.repo_url}}}}},\n",
+    "  note         = {{GitHub Repository}}\n",
+    "}}\"\"\"\n",
+    "\n",
+    "    def json(self):\n",
+    "        return {\n",
+    "            \"author\": self.author,\n",
+    "            \"year\": self.year,\n",
+    "            \"title\": self.title,\n",
+    "            \"repository\": \"GitHub\",\n",
+    "            \"url\": self.repo_url\n",
+    "        }\n",
+    "\n",
+    "    def display(self):\n",
+    "        print(\"📄 Markdown Citation:\\n\")\n",
+    "        print(self.markdown())\n",
+    "        print(\"\\n📚 BibTeX Citation:\\n\")\n",
+    "        print(self.bibtex())\n",
+    "        print(\"\\n🧾 JSON Citation:\\n\")\n",
+    "        print(json.dumps(self.json(), indent=4))\n",
+    "\n",
+    "# 🔧 Example usage\n",
+    "citation = CitationLogger(\n",
+    "    author=\"Nouri Baher\",\n",
+    "    title=\"Hybrid Oversampling for Intrusion Detection: SMOTE + KGSMOTE\",\n",
+    "    repo_url=\"https://github.com/Nouribaher/ids-hybrid-oversampling-smote-kgsmote\",\n",
+    "    year=2025\n",
+    ")\n",
+    "\n",
+    "citation.display()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "71be46bd-0d5e-4e29-9720-c3f7bbfc67aa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import tensorflow as tf\n",
+    "print(\"TensorFlow version:\", tf.__version__)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "621bff58-5956-4b87-b87b-b22f442fa543",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "column_names = [\"duration\", \"protocol_type\", \"service\", \"flag\", \"src_bytes\", \"dst_bytes\", \"land\",\n",
+    "    \"wrong_fragment\", \"urgent\", \"hot\", \"num_failed_logins\", \"logged_in\", \"num_compromised\",\n",
+    "    \"root_shell\", \"su_attempted\", \"num_root\", \"num_file_creations\", \"num_shells\",\n",
+    "    \"num_access_files\", \"num_outbound_cmds\", \"is_host_login\", \"is_guest_login\", \"count\",\n",
+    "    \"srv_count\", \"serror_rate\", \"srv_serror_rate\", \"rerror_rate\", \"srv_rerror_rate\",\n",
+    "    \"same_srv_rate\", \"diff_srv_rate\", \"srv_diff_host_rate\", \"dst_host_count\",\n",
+    "    \"dst_host_srv_count\", \"dst_host_same_srv_rate\", \"dst_host_diff_srv_rate\",\n",
+    "    \"dst_host_same_src_port_rate\", \"dst_host_srv_diff_host_rate\", \"dst_host_serror_rate\",\n",
+    "    \"dst_host_srv_serror_rate\", \"dst_host_rerror_rate\", \"dst_host_srv\",\n",
+    "    \"label\", \"difficulty\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "dbb1c515-320a-47bd-a97c-2a67d31c7186",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "# Load the dataset\n",
+    "df = pd.read_csv(\"KDDTest.txt\",names=column_names,index_col=False)\n",
+    "# Set max_columns to a higher value (e.g., 50 or None for unlimited)\n",
+    "pd.set_option('display.max_columns', 45)  \n",
+    "# Display first 10 rows\n",
+    "df.head(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "43cfbaa0-902f-4f2c-a5a5-b2b86ac45a8d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Export first 5 rows to Excel\n",
+    "df.head(5).to_excel(\"KDDTest_preview.xlsx\", index=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "024d02a3-d00d-46a8-bc60-5f40e28f4348",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df.to_excel(\"KDDTest_full.xlsx\", sheet_name=\"Threats\", index=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5493835a-0cb8-4f27-8bd2-9d54dfd878e0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.read_csv(\"KDDTest.txt\", names=column_names)\n",
+    "\n",
+    "# Reset index if needed\n",
+    "df.reset_index(drop=True, inplace=True)\n",
+    "\n",
+    "# Now export\n",
+    "with pd.ExcelWriter(\"KDDTest_multi.xlsx\") as writer:\n",
+    "    df.head(10).to_excel(writer, sheet_name=\"Preview\", index=False)\n",
+    "    df.to_excel(writer, sheet_name=\"Full\", index=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4d01355e-5fa2-43ec-8710-11729c024759",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "print(os.getcwd())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6cf34221-8637-4d87-bed3-8bc1e552c1ee",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Encoding Categorical Features\n",
+    "#- Purpose: Converts string-based categorical features into numeric form.\n",
+    "#- Why: ML models (especially neural nets) require numerical input.\n",
+    "#- Example: 'tcp', 'udp', 'icmp' → 0, 1, 2 (depending on frequency or order)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d1b61f5f-78e8-46be-96e9-e3479aea7654",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from sklearn.preprocessing import LabelEncoder\n",
+    "\n",
+    "# Store all mappings in a list\n",
+    "mapping_data = []\n",
+    "\n",
+    "# Build mappings for each categorical column\n",
+    "for col in ['protocol_type', 'service', 'flag','label']:\n",
+    "    if col in df.columns:\n",
+    "        original_values = df[col].astype(str)\n",
+    "        le = LabelEncoder()\n",
+    "        le.fit(original_values)\n",
+    "\n",
+    "        # Build mapping: encoded → original\n",
+    "        for code, name in zip(le.transform(le.classes_), le.classes_):\n",
+    "            mapping_data.append((col, code, name))\n",
+    "\n",
+    "# Create a combined DataFrame\n",
+    "mapping_df = pd.DataFrame(mapping_data, columns=['Category', 'Encoded Value', 'Original Name'])\n",
+    "\n",
+    "# Display as a single table\n",
+    "print(\"\\n✅ Combined Mapping Table:\")\n",
+    "print(mapping_df.to_string(index=False))\n",
+    "# Save to a new Excel file\n",
+    "mapping_df.to_excel('KDDTest_CombinedMapping.xlsx', index=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d9f7c098-51f0-46eb-8927-174b1f935f59",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Show unique values and their original names\n",
+    "for col in [ 'label']:\n",
+    "    if col in df.columns:\n",
+    "        # Create a temporary column with original string values\n",
+    "        original_values = df[col].astype(str)  # Ensure it's string\n",
+    "\n",
+    "        # Fit LabelEncoder on original values\n",
+    "        le = LabelEncoder()\n",
+    "        le.fit(original_values)\n",
+    "\n",
+    "        # Build mapping: encoded → original\n",
+    "        mapping = dict(zip(le.transform(le.classes_), le.classes_))\n",
+    "\n",
+    "        print(f\"\\n✅ Unique values in '{col}':\")\n",
+    "        for code, name in sorted(mapping.items()):\n",
+    "            print(f\"  {code:2} → {name}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cef7a07a-c5ac-40fe-95d8-88fbf62a26af",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from sklearn.preprocessing import LabelEncoder\n",
+    "\n",
+    "# Load the Excel file\n",
+    "df = pd.read_excel('KDDTest_Full.xlsx')\n",
+    "\n",
+    "# Encode categorical columns (keep original column names)\n",
+    "for col in ['protocol_type', 'service', 'flag','label']:\n",
+    "    if col in df.columns:\n",
+    "        le = LabelEncoder()\n",
+    "        df[col] = le.fit_transform(df[col].astype(str))\n",
+    "\n",
+    "# Show the first few rows of the updated DataFrame\n",
+    "print(\"\\n✅ Encoded Data Sample:\")\n",
+    "print(df.head())\n",
+    "\n",
+    "# Show the shape and column names\n",
+    "print(\"\\n✅ Data shape:\", df.shape)\n",
+    "print(\"✅ Columns:\", df.columns.tolist())\n",
+    "\n",
+    "# Show unique values in each encoded column\n",
+    "for col in ['protocol_type', 'service', 'flag','label']:\n",
+    "    print(f\"\\n✅ Unique encoded values in '{col}':\", sorted(df[col].unique()))\n",
+    "\n",
+    "# Save to a new Excel file\n",
+    "df.to_excel('KDDTest_Encoded.xlsx', index=False)\n",
+    "print(\"\\n✅ Encoded data saved to 'KDDTest_Encoded.xlsx'\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8869f35a-d5f8-4d1b-b516-d0a8be8cde35",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Feature Normalization\n",
+    "# MinMaxScaler transforms numerical features to a fixed range usually [0, 1] using the formula:\n",
+    "# \"\\text{scaled} = \\frac{\\text{value} - \\text{min}}{\\text{max} - \\text{min}}\"\n",
+    "#This keeps the relative spacing between values but ensures all features are on the same scale, which is crucial for models and layers like Dense, LSTM, SVM, or KNN."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d58fabfb-0c7e-405e-b5f7-462b3fd8696c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from sklearn.preprocessing import MinMaxScaler\n",
+    "\n",
+    "# Load the encoded Excel file\n",
+    "df = pd.read_excel('KDDTest_Encoded.xlsx')\n",
+    "\n",
+    "# Separate features and target\n",
+    "#X_raw = df.drop('label', axis=1)\n",
+    "#y = df['label']\n",
+    "X_raw = df.copy()   \n",
+    "# Normalize features\n",
+    "scaler = MinMaxScaler()\n",
+    "X_scaled = scaler.fit_transform(X_raw)\n",
+    "\n",
+    "# Convert back to DataFrame\n",
+    "normalized_df = pd.DataFrame(X_scaled, columns=X_raw.columns)\n",
+    "#normalized_df['label'] = y  # Add label back\n",
+    "\n",
+    "# Show sample output\n",
+    "print(\"\\n✅ Normalized Data Sample:\")\n",
+    "print(normalized_df.head())\n",
+    "\n",
+    "# Save to a new Excel file\n",
+    "normalized_df.to_excel('KDDTest_Normalized.xlsx', index=False)\n",
+    "print(\"\\n✅ Normalized data saved to 'KDDTest_Normalized.xlsx'\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "92a7ca41-1fdc-43d8-b94a-3a2e7c8d19cf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(df.head())\n",
+    "print(df.describe())\n",
+    "print(df.dtypes)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
