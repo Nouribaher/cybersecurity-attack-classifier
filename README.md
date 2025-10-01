@@ -55,7 +55,7 @@ As a cybersecurity analyst, I designed this pipeline to:
 The pipeline consists of five modular components:
 
 1. **Preprocessor**: Cleans and encodes raw network traffic
-2. **Balancer**: Applies SMOTE (or KGSOMTE) to balance attack classes
+2. **Balancer**: Applies 'SMOTE', 'KGSOMTE', OR 'HYBRID' to balance attack classes
 3. **Reducer**: Uses an autoencoder (or MDSAE) for feature compression
 4. **Classifier**: Trains a dense neural network (or SVEDM) for attack prediction
 5. **Evaluator**: Generates SHAP plots, confusion matrix, and Excel reports
