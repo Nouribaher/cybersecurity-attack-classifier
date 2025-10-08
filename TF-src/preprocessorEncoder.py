@@ -25,17 +25,17 @@ for col in ['protocol_type', 'service', 'flag','label']:
         df[col] = le.fit_transform(df[col].astype(str))
 
 # Show the first few rows of the updated DataFrame
-print("\n✅ Encoded Data Sample:")
+print("\n Encoded Data Sample:")
 print(df.head())
 
 # Show the shape and column names
-print("\n✅ Data shape:", df.shape)
-print("✅ Columns:", df.columns.tolist())
+print("\n Data shape:", df.shape)
+print(" Columns:", df.columns.tolist())
 
 # Show unique values in each encoded column
 for col in ['protocol_type', 'service', 'flag','label']:
-    print(f"\n✅ Unique encoded values in '{col}':", sorted(df[col].unique()))
+    print(f"\n  Unique encoded values in '{col}':", sorted(df[col].unique()))
 
 # Save to a new Excel file
 df.to_excel('KDDTest_Encoded.xlsx', index=False)
-print("\n✅ Encoded data saved to 'KDDTest_Encoded.xlsx'")
+print("\n Encoded data saved to 'KDDTest_Encoded.xlsx'")
