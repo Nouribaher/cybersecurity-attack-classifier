@@ -22,9 +22,9 @@ normalized_df = pd.DataFrame(X_scaled, columns=X_raw.columns)
 #normalized_df['label'] = y  # Add label back
 
 # Show sample output
-print("\n✅ Normalized Data Sample:")
+print("\n Normalized Data Sample:")
 print(normalized_df.head())
 
 # Save to a new Excel file
 normalized_df.to_excel('KDDTest_Normalized.xlsx', index=False)
-print("\n✅ Normalized data saved to 'KDDTest_Normalized.xlsx'")
+print("\n Normalized data saved to 'KDDTest_Normalized.xlsx'")
