@@ -30,10 +30,9 @@ These libraries form the backbone of the modular IDS pipeline, enabling preproce
 | Rare-Class Detection Improvement   | Achieved via SMOTE oversampling                   |
 
 
-
-🔧 Future Enhancements
-- Replace SMOTE with KGSOMTE for semantic oversampling
-- Replace Autoencoder with MDSAE for deep semantic reduction
+  Future Enhancements
+- Together SMOTE with KGSOMTE for semantic oversampling
+- Replace  Denoising Autoencoder (DAE) with MDSAE for deep semantic reduction
 - Replace Dense NN with SVEDM for adaptive classification
 - Add confusion matrix, ROC curves, and attack-wise precision
 
