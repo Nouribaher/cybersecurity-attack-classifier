@@ -112,11 +112,36 @@ An autoencoder is a specific type of Deep Neural Network (DNN) that use either a
 <img width="909" height="578" alt="Screenshot 2025-10-08 012647" src="https://github.com/user-attachments/assets/1653f786-2b86-42c5-b3e9-7a0b2bd31601" />
 
 
+<details>
+  <summary><strong> Build Autoencoder (Click to Expand)</strong></summary>
+
+<br>
+
+| Aspect                     | Observation                              | Implication                               | Actionable Insight                          | Explanation & Impact                                                                 |
+|---------------------------|------------------------------------------|--------------------------------------------|----------------------------------------------|--------------------------------------------------------------------------------------|
+| Architecture Depth        | Shallow: Input → 32 → Output             | Limited feature learning                   | Deep encoders learn richer representations | A single hidden layer restricts abstraction—consider stacking layers for complexity. |
+| Bottleneck Depth          | 32 latent units                          | Compresses feature space                   | May be too aggressive try 64 or 128         | Reduces dimensionality, deeper bottlenecks may preserve more structure.              |
+| Activation Functions      | ReLU (encoder), Sigmoid (decoder)        | Non-linear encoding, bounded output        | Confirmed via MinMaxScaler [0, 1]           | ReLU enables abstraction , sigmoid ensures output stays in [0, 1] for MSE loss.       |
+| Loss Function             | Mean Squared Error (MSE)                 | Penalizes reconstruction error             | Suitable for continuous features            | Measures how well the output matches the input—ideal for clean reconstruction.       |
+| Optimizer                 | Adam (lr=0.001)                          | Adaptive learning                          | Good convergence behavior                   | Adam balances speed and stability well-suited for autoencoder training.              |
+| Epochs                   | 50                                        | May limit convergence                      | Use EarlyStopping with 100+ epochs          | More epochs with early stopping improves flexibility and avoids manual tuning.       |
+| Batch Size                | 128                                       | Efficient weight updates                   | Balanced for medium-sized datasets          | Controls memory usage and convergence speed—128 is a solid default.                  |
+| Validation Strategy       | validation_split=0.1                     | Monitors generalization                    | Use StratifiedKFold for fairness            | Random splits may skew class balance stratified folds improve representativeness.    |
+| Shuffle                   | Enabled                                   | Reduces overfitting                        | Improves generalization                     | Prevents the model from memorizing input order—essential for robust training.        |
+| Dropout Regularization    | Not applied                               | May overfit clean input                    | Add dropout if generalization fails         | Without dropout, the model may memorize training data—especially with low noise.     |
+| Noise Injection           | None                                      | No robustness to corruption                | Consider Denoising AE for anomaly detection | Clean input reconstruction only—cannot handle noisy or corrupted inputs.             |
+| Compression Output        | `encoder.predict(X_balanced)`            | Latent feature extraction                  | Ready for downstream tasks                  | Produces compressed representations for clustering, anomaly detection, etc.          |
+| Educational Value         | High—modular and teachable               | Good for compression and pipeline demos    |  Reviewer-friendly documentation             | Ideal for showcasing basic autoencoder principles and reproducible ML workflows.     |
+
+</details>
+
+
+
 ### Reducer with a Baseline Denoising Autoencoder (DAE)
 <img width="895" height="577" alt="Screenshot 2025-10-08 010519" src="https://github.com/user-attachments/assets/55f3bb29-d387-4db9-96a8-a071217cd5fc" />
 
 <details>
-  <summary><strong>🧪 Diagnostic Matrix: Baseline Denoising Autoencoder (DAE) (Click to Expand)</strong></summary>
+  <summary><strong>  Baseline Denoising Autoencoder (DAE) (Click to Expand)</strong></summary>
 
 <br>
 
@@ -139,7 +164,7 @@ An autoencoder is a specific type of Deep Neural Network (DNN) that use either a
 
 
 <details>
-  <summary><strong> Diagnostic Matrix: Enhanced Denoising Autoencoder (DAE) (Click to Expand)</strong></summary>
+  <summary><strong> Enhanced Denoising Autoencoder (DAE) (Click to Expand)</strong></summary>
 
 <br>
 
@@ -159,7 +184,7 @@ An autoencoder is a specific type of Deep Neural Network (DNN) that use either a
 ###  Diagnostic Comparison: Baseline vs. Enhanced Denoising Autoencoder (DAE)
 
 <details>
-  <summary><strong> Diagnostic Comparison: Baseline vs.Enhanced Denoising Autoencoder (Click to Expand)</strong></summary>
+  <summary><strong>  Baseline vs.Enhanced Denoising Autoencoder (Click to Expand)</strong></summary>
 
 <br>
 
