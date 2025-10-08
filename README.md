@@ -104,7 +104,23 @@ By applying SMOTE for broad coverage and KGSMOTE for targeted realism, the IDS p
 | Academic alignment               |  Widely accepted in ML literature.<br>Commonly used in IDS and imbalanced classification research. | Aligned with KGMS-IDS framework  proposed in [Electronics 2023, 12(9), 3911](https://www.mdpi.com/2079-9292/12/9/3911).<br>Introduces KDE-enhanced realism for minority class synthesis. | Combining both demonstrates methodological rigor.<br>Supports reproducibility and academic credibility. |
 | SHAP-based interpretability      | SHAP may misattribute importance due to noisy synthetic samples.<br>Decision boundaries may be distorted. | KDE-based realism improves SHAP clarity.<br>Feature attributions are more trustworthy and interpretable. | SMOTE expands the decision space.<br>helps the model learn broader decision boundaries.<br>KGSMOTE ensures SHAP values reflect realistic minority class behavior.<br>Together, they helped  IDS pipeline:<br>Detect rare attacks more reliably.<br>Reduce false positives.<br>Improve interpretability.<br>Meet academic benchmarks.<br>which improves SHAP explanations and trustworthiness.
 
-  
+
+ ###  Reducer module  (DAE) or (MDSAE) 
+An autoencoder is a specific type of Deep Neural Network (DNN) that use either a Denoising Autoencoder (DAE) or a Mechanism-Driven Semi-Supervised Autoencoder (MDSAE) to train the model to be robust to noise so it learns mechanism-aware, high-quality latent features.Trained through unsupervised learning to minimize the difference between the input and the reconstructed output.
+
+
+
+
+<img width="909" height="578" alt="Screenshot 2025-10-08 012647" src="https://github.com/user-attachments/assets/1653f786-2b86-42c5-b3e9-7a0b2bd31601" />
+
+
+
+
+
+<img width="895" height="577" alt="Screenshot 2025-10-08 010519" src="https://github.com/user-attachments/assets/55f3bb29-d387-4db9-96a8-a071217cd5fc" />
+
+
+
 
 ## Files
    - `IDS_Pipeline.ipynb`: End-to-end notebook
