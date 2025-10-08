@@ -120,15 +120,38 @@ An autoencoder is a specific type of Deep Neural Network (DNN) that use either a
 
 <br>
 
-| Aspect                     | Observation                              | Implication                               | Actionable Insight                        |
-|---------------------------|------------------------------------------|--------------------------------------------|--------------------------------------------|
-| Training Loss             | Low and flat (~0.00020 to ~0.00025 MSE)  | Learns structure from noisy input          | Good representation learning             |
-| Validation Loss           | Fluctuating and higher than training (~0.0003 to ~0.00050 MSE) | Poor generalization, unstable performance  | Indicates overfitting or noise mismatch or lack of regularization  |
-| Noise Injection           | Gaussian noise (σ=1, noise_factor = 0.1)  | Adds robustness                            |Consider tuning factor to 0.05            |
-| Dropout Regularization    | Not applied                               | Model may memorize input patterns          | Introduce dropout to reduce overfitting         |
-| Bottleneck Depth          | 32 latent units                           | Compresses feature space                   |May be too aggressive try 64 or 128       |
-| Validation Strategy       | Random 10% split                          | May not reflect true distribution          | Use StratifiedKFold for balanced validation         |
-| Output Activation         | Sigmoid                                   | Requires normalized input                  | Confirmed via MinMaxScaler[0, 1]               |
+| Aspect                     | Observation                              | Implication                               | Actionable Insight                          | Explanation & Impact                                                                 |
+|---------------------------|------------------------------------------|--------------------------------------------|----------------------------------------------|--------------------------------------------------------------------------------------|
+| Training Loss             | Low and flat (~0.00020 to ~0.00025 MSE)  | Learns structure from noisy input          | Good representation learning               | Indicates the model is fitting noisy input well with minimal reconstruction error.   |
+| Validation Loss           | Fluctuating and higher than training (~0.0003 to ~0.00050 MSE) | Poor generalization, unstable performance  | Indicates overfitting or lack of regularization | Suggests the model struggles to denoise unseen data—validation loss is unstable.     |
+| Noise Injection           | Gaussian noise (σ=1, noise_factor = 0.1) | Adds robustness                            | Consider tuning factor to 0.05              | Simulates real-world corruption; tuning affects difficulty and generalization.       |
+| Dropout Regularization    | Not applied                               | Model may memorize input patterns          |  Introduce dropout to reduce overfitting     | Without dropout, the model may overfit and fail to generalize beyond training data.  |
+| Bottleneck Depth          | 32 latent units                           | Compresses feature space                   |  May be too aggressive try 64 or 128         | Controls dimensionality reduction , deeper bottlenecks may preserve more structure.   |
+| Validation Strategy       | Random 10% split                          | May not reflect true distribution          | Use StratifiedKFold for balanced validation | Random splits can skew class balance—stratification improves representativeness.     |
+| Output Activation         | Sigmoid                                   | Requires normalized input                  | Confirmed via MinMaxScaler [0, 1]           | Ensures outputs stay in [0, 1] range—critical for MSE loss and sigmoid activation.   |
+
+</details>
+
+
+### Reducer with Enhanced Denoising Autoencoder (DAE)
+<img width="844" height="627" alt="Screenshot 2025-10-08 165437" src="https://github.com/user-attachments/assets/11c12c95-bb8a-47a0-a484-5ace2df8443e" />
+
+
+
+<details>
+  <summary><strong>🧪 Diagnostic Matrix: Enhanced Denoising Autoencoder (DAE) (Click to Expand)</strong></summary>
+
+<br>
+
+| Aspect                     | Observation                              | Implication                               | Actionable Insight                          | Explanation & Impact                                                                 |
+|---------------------------|------------------------------------------|--------------------------------------------|----------------------------------------------|--------------------------------------------------------------------------------------|
+| Training Loss             | Low and flat (~7.5 MSE)                  | Learns structure from noisy input          | Good representation learning               | Indicates the model is fitting noisy input well without instability.                |
+| Validation Loss           | High and flat (~25 MSE)                  | Poor generalization                        | Indicates overfitting or noise mismatch    | Suggests the model fails to denoise unseen data may need better regularization.     |
+| Noise Injection           | Gaussian noise (σ=1, factor=0.1)         | Adds robustness                            |  Consider tuning factor to 0.05              | Simulates real-world corruption,tuning affects difficulty and generalization.       |
+| Dropout Regularization    | Applied (rate=0.2 before bottleneck)     | Reduces memorization and overfitting       | Helps generalization                       | Prevents overfitting by randomly deactivating neurons during training.              |
+| Bottleneck Depth          | 32 latent units (after 64-unit layer)    | Compresses feature space                   | May be too aggressive—try 64 or 128         | Controls dimensionality reduction, deeper bottlenecks may preserve more structure.  |
+| Validation Strategy       | Random 10% split                          | May not reflect true distribution          | Use StratifiedKFold for fairness            | Random splits can skew class balance—stratification improves representativeness.    |
+| Output Activation         | Sigmoid                                   | Requires normalized input                  | Confirmed via MinMaxScaler [0, 1]           | Ensures outputs stay in [0, 1] range critical for MSE loss and sigmoid activation.   |
 
 </details>
 
@@ -140,8 +163,10 @@ An autoencoder is a specific type of Deep Neural Network (DNN) that use either a
 
 
 
-### Reducer with Enhancement of a Denoising Autoencoder (DAE)
-<img width="844" height="627" alt="Screenshot 2025-10-08 165437" src="https://github.com/user-attachments/assets/11c12c95-bb8a-47a0-a484-5ace2df8443e" />
+
+
+
+
 
 
 
