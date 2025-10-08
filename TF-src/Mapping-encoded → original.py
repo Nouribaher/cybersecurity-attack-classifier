@@ -11,6 +11,6 @@ for col in [ 'label']:
         # Build mapping: encoded → original
         mapping = dict(zip(le.transform(le.classes_), le.classes_))
 
-        print(f"\n✅ Unique values in '{col}':")
+        print(f"\n Unique values in '{col}':")
         for code, name in sorted(mapping.items()):
             print(f"  {code:2} → {name}")
