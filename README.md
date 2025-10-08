@@ -110,16 +110,19 @@ An autoencoder is a specific type of Deep Neural Network (DNN) that use either a
 
 
 
-
+### Reducer with Autoencoder
 <img width="909" height="578" alt="Screenshot 2025-10-08 012647" src="https://github.com/user-attachments/assets/1653f786-2b86-42c5-b3e9-7a0b2bd31601" />
 
 
 
 
-
+### Reducer with a Denoising Autoencoder (DAE)
 <img width="895" height="577" alt="Screenshot 2025-10-08 010519" src="https://github.com/user-attachments/assets/55f3bb29-d387-4db9-96a8-a071217cd5fc" />
 
 
+
+### Reducer with Enhancement of a Denoising Autoencoder (DAE)
+<img width="844" height="627" alt="Screenshot 2025-10-08 165437" src="https://github.com/user-attachments/assets/11c12c95-bb8a-47a0-a484-5ace2df8443e" />
 
 
 ## Files
