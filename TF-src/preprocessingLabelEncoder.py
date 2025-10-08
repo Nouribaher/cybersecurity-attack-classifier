@@ -19,7 +19,7 @@ for col in ['protocol_type', 'service', 'flag','label']:
 mapping_df = pd.DataFrame(mapping_data, columns=['Category', 'Encoded Value', 'Original Name'])
 
 # Display as a single table
-print("\n✅ Combined Mapping Table:")
+print("\n Combined Mapping Table:")
 print(mapping_df.to_string(index=False))
 # Save to a new Excel file
 mapping_df.to_excel('KDDTest_CombinedMapping.xlsx', index=False)
