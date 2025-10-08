@@ -332,9 +332,103 @@ Next step: [Evaluator → SHAP plots, metrics, and Excel exports]
 ### Module 5: Evaluator – SHAP, Confusion Matrix, and Excel Reports
 
 
+# ============================================================
+# Module 5: Evaluator – SHAP, Confusion Matrix, and Excel Reports
+# ============================================================
+
+import pandas as pd
+import numpy as np
+import shap
+import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from tensorflow.keras.models import load_model
+from sklearn.preprocessing import StandardScaler
+from openpyxl import Workbook
+
+# ---------------------------
+# Step 1: Load Compressed Features and Labels
+# ---------------------------
+X_df = pd.read_excel("compressed-Hybrid_Balanced_DAE.xlsx", sheet_name="Compressed_Features", engine="openpyxl")
+y_df = pd.read_excel("results-Hybrid_Balanced.xlsx", engine="openpyxl")
+y_raw = y_df['attack_type'].values
+
+# ---------------------------
+# Step 2: Encode Labels
+# ---------------------------
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+y = le.fit_transform(y_raw)
+class_names = list(le.classes_)
+
+# ---------------------------
+# Step 3: Prepare Feature Matrix
+# ---------------------------
+X = X_df.select_dtypes(include=[np.number]).values
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# ---------------------------
+# Step 4: Load Trained Model
+# ---------------------------
+model = load_model("DAE_Neural_Classifier.h5")
+
+# ---------------------------
+# Step 5: Predict and Evaluate
+# ---------------------------
+y_pred = np.argmax(model.predict(X_test), axis=1)
+acc = accuracy_score(y_test, y_pred)
+print(f"\n✅ Accuracy: {acc:.4f}")
+
+# Classification Report
+report_dict = classification_report(y_test, y_pred, target_names=class_names, output_dict=True)
+report_df = pd.DataFrame(report_dict).transpose()
+report_df.to_excel("Evaluation_Classification_Report.xlsx")
+print("📁 Classification report saved to 'Evaluation_Classification_Report.xlsx'")
+
+# Confusion Matrix
+cm = pd.DataFrame(confusion_matrix(y_test, y_pred),
+                  index=class_names,
+                  columns=class_names)
+cm.to_excel("Evaluation_Confusion_Matrix.xlsx")
+print("📁 Confusion matrix saved to 'Evaluation_Confusion_Matrix.xlsx'")
+
+# ---------------------------
+# Step 6: SHAP Feature Importance
+# ---------------------------
+explainer = shap.Explainer(model, X_train)
+shap_values = explainer(X_test[:100])  # Limit for performance
+
+# SHAP Summary Plot
+plt.figure()
+shap.summary_plot(shap_values, X_test[:100], feature_names=X_df.columns, show=False)
+plt.tight_layout()
+plt.savefig("SHAP_Summary_Plot.png")
+print("📊 SHAP summary plot saved to 'SHAP_Summary_Plot.png'")
+
+# SHAP Values Export
+shap_df = pd.DataFrame(shap_values.values, columns=X_df.columns)
+shap_df.to_excel("SHAP_Values.xlsx")
+print("📁 SHAP values saved to 'SHAP_Values.xlsx'")
 
 
+### GitHub Markdown Annotation
+##  Module 5: Evaluator – SHAP, Confusion Matrix, and Excel Reports
 
+This module evaluates the trained DNN classifier using:
+
+- **Confusion Matrix**: Visualizes prediction accuracy per class
+- **Classification Report**: Precision, recall, F1-score per class
+- **SHAP Analysis**: Explains feature contributions to predictions
+
+All outputs are saved as Excel files and plots for downstream analysis and publication.
+
+
+
+Would you like help wrapping this into a GitHub notebook with citation loggers and educational annotations? I can also scaffold a README.md section or generate per-class SHAP plots if needed.
 
 
 
