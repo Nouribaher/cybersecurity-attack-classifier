@@ -20,7 +20,7 @@ This project uses the following Python libraries:
 These libraries form the backbone of the modular IDS pipeline, enabling preprocessing, modeling, and interpretability.
 
 
-### 📊 Results Summary
+### Results Summary
 
 | Metric / Output                     | Description / File                                |
 |------------------------------------|----------------------------------------------------|
@@ -44,14 +44,14 @@ These libraries form the backbone of the modular IDS pipeline, enabling preproce
 
 This project implements a modular, explainable intrusion detection system inspired by the hybrid deep learning framework proposed in [Electronics 2023, 12(9), 3911](https://www.mdpi.com/2079-9292/12/9/3911). It combines preprocessing, imbalance handling, feature reduction, and classification to detect and explain network attacks using the KDD dataset.
 
-## 🔐 Motivation
+## Motivation
 As a cybersecurity analyst, I designed this pipeline to:
 - Detect diverse attack types with high accuracy
 - Handle imbalanced datasets using synthetic oversampling
 - Reduce feature dimensionality for faster inference
 - Provide transparent model explanations using SHAP
 
-## 🧱 Architecture
+## Architecture
 The pipeline consists of five modular components:
 
 1. **Preprocessor**: Cleans and encodes raw network traffic
@@ -99,15 +99,15 @@ By applying SMOTE for broad coverage and KGSMOTE for targeted realism, the IDS p
 
 | Challenge                        | SMOTE                                                                 | KGSMOTE                                                                 | Why Both Work Together                                                                 |
 |----------------------------------|-----------------------------------------------------------------------|------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| Coverage of rare classes         | ✅ Broad coverage across all minority classes.<br>Interpolates between nearest neighbors to generate synthetic samples, even in sparse regions. | ⚠️ Limited to high-density zones.<br>Uses KDE to identify realistic regions, avoiding interpolation in sparse or noisy areas. | SMOTE ensures that all rare classes (e.g., U2R, R2L) are represented.<br>KGSMOTE refines those samples to match realistic distributions. |
-| Sample realism                   | ⚠️ May generate noisy or overlapping samples.<br>Interpolation can occur near outliers or in low-density regions, reducing fidelity. | ✅ High realism via KDE-guided sampling.<br>Generates synthetic data only where real samples are densely clustered. | SMOTE provides initial diversity.<br>KGSMOTE enhances quality by anchoring synthetic samples in realistic feature space. |
-| Computational cost               | ✅ Lightweight and fast.<br>Scales well for large datasets and quick prototyping. | ⚠️ Computationally intensive.<br>KDE estimation adds overhead, especially for high-dimensional data. | Use SMOTE for initial oversampling.<br>Apply KGSMOTE selectively for precision in critical attack classes. |
-| Academic alignment               | ✅ Widely accepted in ML literature.<br>Commonly used in IDS and imbalanced classification research. | ✅ Aligned with KGMS-IDS framework  proposed in [Electronics 2023, 12(9), 3911](https://www.mdpi.com/2079-9292/12/9/3911).<br>Introduces KDE-enhanced realism for minority class synthesis. | Combining both demonstrates methodological rigor.<br>Supports reproducibility and academic credibility. |
-| SHAP-based interpretability      | ⚠️ SHAP may misattribute importance due to noisy synthetic samples.<br>Decision boundaries may be distorted. | ✅ KDE-based realism improves SHAP clarity.<br>Feature attributions are more trustworthy and interpretable. | SMOTE expands the decision space.<br>helps the model learn broader decision boundaries.<br>KGSMOTE ensures SHAP values reflect realistic minority class behavior.<br>Together, they helped  IDS pipeline:<br>Detect rare attacks more reliably.<br>Reduce false positives.<br>Improve interpretability.<br>Meet academic benchmarks.<br>which improves SHAP explanations and trustworthiness.
+| Coverage of rare classes         | Broad coverage across all minority classes.<br>Interpolates between nearest neighbors to generate synthetic samples, even in sparse regions. | Limited to high-density zones.<br>Uses KDE to identify realistic regions, avoiding interpolation in sparse or noisy areas. | SMOTE ensures that all rare classes (e.g., U2R, R2L) are represented.<br>KGSMOTE refines those samples to match realistic distributions. |
+| Sample realism                   |  May generate noisy or overlapping samples.<br>Interpolation can occur near outliers or in low-density regions, reducing fidelity. |  High realism via KDE-guided sampling.<br>Generates synthetic data only where real samples are densely clustered. | SMOTE provides initial diversity.<br>KGSMOTE enhances quality by anchoring synthetic samples in realistic feature space. |
+| Computational cost               |  Lightweight and fast.<br>Scales well for large datasets and quick prototyping. | Computationally intensive.<br>KDE estimation adds overhead, especially for high-dimensional data. | Use SMOTE for initial oversampling.<br>Apply KGSMOTE selectively for precision in critical attack classes. |
+| Academic alignment               |  Widely accepted in ML literature.<br>Commonly used in IDS and imbalanced classification research. | Aligned with KGMS-IDS framework  proposed in [Electronics 2023, 12(9), 3911](https://www.mdpi.com/2079-9292/12/9/3911).<br>Introduces KDE-enhanced realism for minority class synthesis. | Combining both demonstrates methodological rigor.<br>Supports reproducibility and academic credibility. |
+| SHAP-based interpretability      | SHAP may misattribute importance due to noisy synthetic samples.<br>Decision boundaries may be distorted. | KDE-based realism improves SHAP clarity.<br>Feature attributions are more trustworthy and interpretable. | SMOTE expands the decision space.<br>helps the model learn broader decision boundaries.<br>KGSMOTE ensures SHAP values reflect realistic minority class behavior.<br>Together, they helped  IDS pipeline:<br>Detect rare attacks more reliably.<br>Reduce false positives.<br>Improve interpretability.<br>Meet academic benchmarks.<br>which improves SHAP explanations and trustworthiness.
 
   
 
-## 📁 Files
+## Files
    - `IDS_Pipeline.ipynb`: End-to-end notebook
    - `SHAP_Explanation_AllRows.xlsx`: Annotated predictions with feature impact
   - `autoencoder_model.h5`: Trained feature reducer
