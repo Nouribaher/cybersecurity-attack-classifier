@@ -218,8 +218,127 @@ This module trains a dense neural network (DNN) on compressed, balanced features
 - `Confusion_Matrix_DNN.xlsx` – Confusion matrix
 - `Classification_Report_DNN.xlsx` – Precision, recall, F1-score per class
 
+<img width="1246" height="830" alt="Screenshot 2025-10-09 164219" src="https://github.com/user-attachments/assets/afca8e6c-a7dd-421e-9889-8f9a724ef055" />
 
 
+### Functional Model Overview
+
+This repository contains a neural network built using the **Keras Functional API**.
+The model is designed for classification or regression tasks with a 32-dimensional input vector.
+
+<img width="906" height="702" alt="image" src="https://github.com/user-attachments/assets/37772f3b-7f74-40e4-90d1-424e61d69449" />
+
+
+---
+
+## Model Architecture
+
+| Layer (type)            | Output Shape | Parameters | Description                                                              |
+| ----------------------- | ------------ | ---------- | ------------------------------------------------------------------------ |
+| **InputLayer**          | `(None, 32)` | 0          | Accepts a 32-dimensional feature vector as input.                        |
+| **Dense (dense)**       | `(None, 64)` | 2,112      | Fully connected layer with 64 neurons and ReLU activation.               |
+| **Dropout (dropout)**   | `(None, 64)` | 0          | Randomly drops a fraction of units to prevent overfitting.               |
+| **Dense (dense_1)**     | `(None, 32)` | 2,080      | Fully connected layer with 32 neurons, likely ReLU activation.           |
+| **Dropout (dropout_1)** | `(None, 32)` | 0          | Another dropout layer for regularization.                                |
+| **Dense (dense_2)**     | `(None, 38)` | 1,254      | Output layer with 38 units, suitable for a 38-class classification task. |
+
+---
+
+## ⚙️ Model Summary
+
+* **Total parameters:** 5,448
+* **Trainable parameters:** 5,446
+* **Non-trainable parameters:** 0
+* **Optimizer parameters:** 2
+
+---
+
+## 🧩 Architecture Explanation
+
+1. **Input Layer:**
+   Takes input vectors of shape `(32,)`, representing the features of each sample.
+
+2. **Hidden Layers:**
+   Two dense (fully connected) layers with 64 and 32 units respectively, each followed by a **Dropout** layer.
+   Dropout helps improve generalization by randomly setting a fraction of input units to 0 during training.
+
+3. **Output Layer:**
+   The final dense layer has 38 output neurons, suitable for multi-class classification.
+   Typically paired with a **softmax** activation to output class probabilities.
+
+---
+
+## 🧪 Training Details
+
+You can compile and train this model as follows:
+
+```python
+from tensorflow.keras import Input, Model
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+
+# Define the model
+inputs = Input(shape=(32,))
+x = Dense(64, activation='relu')(inputs)
+x = Dropout(0.5)(x)
+x = Dense(32, activation='relu')(x)
+x = Dropout(0.5)(x)
+outputs = Dense(38, activation='softmax')(x)
+
+model = Model(inputs, outputs)
+
+# Compile
+model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Summary
+model.summary()
+```
+
+---
+
+## 📦 Dependencies
+
+* Python 3.8+
+* TensorFlow 2.9+
+* NumPy
+
+Install requirements:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🚀 Usage
+
+To train the model:
+
+```bash
+python train.py
+```
+
+To evaluate on test data:
+
+```bash
+python evaluate.py
+```
+
+---
+
+## 📈 Notes
+
+* You can adjust the **Dropout rate** or the number of **hidden units** to balance bias and variance.
+* Replace the output activation and loss function if using regression or binary classification tasks.
+
+---
+
+**Author:** [Your Name]
+**License:** MIT
+
+
+
+............................................................
 
 
 ## Files
