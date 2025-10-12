@@ -244,7 +244,7 @@ The model is designed for classification or regression tasks with a 32-dimension
 
 ---
 
-## ⚙️ Model Summary
+## Model Summary
 
 * **Total parameters:** 5,448
 * **Trainable parameters:** 5,446
@@ -253,7 +253,7 @@ The model is designed for classification or regression tasks with a 32-dimension
 
 ---
 
-## 🧩 Architecture Explanation
+##  Architecture Explanation
 
 1. **Input Layer:**
    Takes input vectors of shape `(32,)`, representing the features of each sample.
@@ -268,7 +268,7 @@ The model is designed for classification or regression tasks with a 32-dimension
 
 ---
 
-## 🧪 Training Details
+## Training Details
 
 You can compile and train this model as follows:
 
@@ -296,11 +296,15 @@ model.summary()
 
 ---
 
-## 📦 Dependencies
-
+##  Dependencies
 * Python 3.8+
 * TensorFlow 2.9+
-* NumPy
+* NumPy 1.21+
+* pandas 1.3+
+* scikit-learn 1.0+
+* SHAP 0.41+
+* matplotlib 3.4+
+* openpyxl 3.0+  *(for Excel I/O)*
 
 Install requirements:
 
@@ -310,7 +314,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Usage
+## Usage
 
 To train the model:
 
@@ -326,19 +330,32 @@ python evaluate.py
 
 ---
 
-## 📈 Notes
+##  Notes
 
 * You can adjust the **Dropout rate** or the number of **hidden units** to balance bias and variance.
 * Replace the output activation and loss function if using regression or binary classification tasks.
 
 ---
 
-**Author:** [Your Name]
+**Author:** [Nouri Baher]
 **License:** MIT
 
 
 
 ............................................................
+
+## Files
+- 'IDS_Pipeline.ipynb' → End-to-end notebook for training, evaluating, and explaining the IDS model.
+- 'DAE_Neural_Classifier.h5' → Trained deep autoencoder-based classifier for anomaly detection.
+- 'compressed-Hybrid_Balanced-Denoising.xlsx' → Input feature set after dimensionality reduction and balancing.
+- 'results-Hybrid_Balanced.xlsx' → Ground truth labels and metadata for evaluation.
+- 'Evaluation_Classification_Report.xlsx' → Exported classification metrics (precision, recall, F1-score, support) per class.
+- 'Evaluation_Confusion_Matrix.xlsx' → Confusion matrix showing actual vs. predicted class distributions.
+- 'SHAP_Summary_Plot.png' → Visual summary of SHAP feature importance across samples.
+- 'SHAP_Values_MeanAcrossClasses.xlsx' → Aggregated SHAP values (mean absolute impact) across all classes.
+- 'SHAP_Values_Class_<label>.xlsx' → Per-class SHAP values with class label column for interpretability.
+- 'requirements.txt' → List of required Python packages and versions for reproducibility.
+
 
 
 ## Files
