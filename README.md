@@ -345,24 +345,16 @@ python evaluate.py
 ............................................................
 
 ## Files
-- 'IDS_Pipeline.ipynb' → End-to-end notebook for training, evaluating, and explaining the IDS model.
-- 'DAE_Neural_Classifier.h5' → Trained deep autoencoder-based classifier for anomaly detection.
-- 'compressed-Hybrid_Balanced-Denoising.xlsx' → Input feature set after dimensionality reduction and balancing.
-- 'results-Hybrid_Balanced.xlsx' → Ground truth labels and metadata for evaluation.
-- 'Evaluation_Classification_Report.xlsx' → Exported classification metrics (precision, recall, F1-score, support) per class.
-- 'Evaluation_Confusion_Matrix.xlsx' → Confusion matrix showing actual vs. predicted class distributions.
-- 'SHAP_Summary_Plot.png' → Visual summary of SHAP feature importance across samples.
-- 'SHAP_Values_MeanAcrossClasses.xlsx' → Aggregated SHAP values (mean absolute impact) across all classes.
-- 'SHAP_Values_Class_<label>.xlsx' → Per-class SHAP values with class label column for interpretability.
-- 'requirements.txt' → List of required Python packages and versions for reproducibility.
+- `IDS_Pipeline.ipynb` → End-to-end notebook for training, evaluating, and explaining the IDS model.
+- `DAE_Neural_Classifier.h5` → Trained deep autoencoder-based classifier for anomaly detection.
+- `compressed-Hybrid_Balanced-Denoising.xlsx` → Input feature set after dimensionality reduction and balancing.
+- `Results-Hybrid_Balanced.xlsx` → Ground truth labels and metadata for evaluation.
+- `Evaluation_Classification_Report.xlsx` → Exported classification metrics (precision, recall, F1-score, support) per class.
+- `Evaluation_Confusion_Matrix.xlsx` → Confusion matrix showing actual vs. predicted class distributions.
+- `SHAP_Summary_Plot.png` → Visual summary of SHAP feature importance across samples.
+- `SHAP_Values_MeanAcrossClasses.xlsx` → Aggregated SHAP values (mean absolute impact) across all classes.
+- `SHAP_Values_Class_<label>.xlsx` → Per-class SHAP values with class label column for interpretability.
 
-
-
-## Files
-   - `IDS_Pipeline.ipynb`: End-to-end notebook
-   - `SHAP_Explanation_AllRows.xlsx`: Annotated predictions with feature impact
-  - `autoencoder_model.h5`: Trained feature reducer
-  - `requirements.txt`: Dependencies
 
 ### Citation
 ```markdown
